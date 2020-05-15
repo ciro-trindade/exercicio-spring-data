@@ -22,7 +22,7 @@ public class ProdutoService implements ServiceInterface<Produto> {
 	}
 
 	@Override
-	public Produto findById(Long id) {
+	public Produto findById(Long id) {		
 		Optional<Produto> _prod = produtoRepo.findById(id);		
 		return _prod.orElse(null);
 	}

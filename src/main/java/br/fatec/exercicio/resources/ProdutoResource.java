@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,7 @@ public class ProdutoResource implements ResourceInterface<Produto> {
 	public ResponseEntity<?> getId(@PathVariable("id") Long id) {
 		Produto _prod = produtoService.findById(id);
 		if (_prod != null) {
-			ResponseEntity.ok(_prod);
+			return ResponseEntity.ok(_prod);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
@@ -48,17 +49,18 @@ public class ProdutoResource implements ResourceInterface<Produto> {
 
 	@PutMapping
 	@Override
-	public ResponseEntity<?> put(Produto obj) {
+	public ResponseEntity<?> put(@RequestBody Produto obj) {
 		if (produtoService.update(obj)) {
 			return ResponseEntity.ok(obj);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
+	@DeleteMapping(value = "/{id}")
 	@Override
-	public ResponseEntity<?> delete(Long id) {
+	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		if (produtoService.delete(id)) {
-			ResponseEntity.ok();
+			return ResponseEntity.ok().build();
 		}		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
